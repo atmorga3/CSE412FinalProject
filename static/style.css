@@ -31,6 +31,21 @@ body {
     background-color: #2c2f3e;
 }
 
+img {
+    white-space: nowrap;
+    background-color: transparent;
+    max-width: 5%;
+    height:  auto;
+    display: inline;
+    float: right;
+}
+
+#title {
+    display: inline;
+    white-space: nowrap;
+    text-align: center;
+}
+
 #search {
     display: inline-block;
     border: 2px solid #445fa5;
@@ -38,16 +53,34 @@ body {
     font-size: 14px;
     border-spacing: 2px;
     padding: 8px 16px;
-    font-style: italic;
     background-color: transparent;
     color: #a1b0d8;
     border-color: #445fa5;
 
 }
 
+#searchLine {
+    text-align: center;
+}
+
+#search:focus {
+    outline: none !important;
+    border-color: #a1b0d8;
+    color: #a1b0d8;
+    border-spacing: 2px;
+}
+
 #search::placeholder {
     color: #a1b0d8;
     border-color: #445fa5;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+}
+
+input:focus
+{
+    border-color: #a1b0d8;
 }
 
 button {
@@ -62,11 +95,13 @@ button {
     font-weight:bold;
     padding:8px 16px;
     text-decoration:none;
+    border-spacing: 2px;
     border-color: #445fa5;
 }
 
 button:hover {
     background-color:transparent;
+    border-color: #a1b0d8;
 }
 
 button:active {
