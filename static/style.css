@@ -2,6 +2,8 @@
     border-spacing: 0;
     margin: 1rem;
     background-color: #96a0b5;
+    text-align: center;
+
 }
 
 .table__row:nth-child(even) {
@@ -16,51 +18,60 @@
     padding: 8px;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 h1 {
     font-family: arial;
     color: #a1b0d8;
+    text-align: center;
+    display: inline inherit;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    padding: 1em;
 }
 
 #searchTitle {
     font-family: arial;
     color: #a1b0d8;
+    display: inherit;
 
-}
-
-body {
-    background-color: #2c2f3e;
 }
 
 img {
     white-space: nowrap;
-    background-color: transparent;
-    max-width: 5%;
+    max-width: 60px;
     height:  auto;
     display: inline;
     float: right;
+    margin-top: 1em;
 }
 
-#title {
-    display: inline;
+#upperBackImage {
+    background-image: url("https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt13186c22cf0a2f30/5d87c24e3166f22df2ab8dc4/howlingabyss.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: inherit;
     white-space: nowrap;
     text-align: center;
+    padding: 0px;
+    margin-top: 0px;
 }
 
 #search {
-    display: inline-block;
+    display: inline;
     border: 2px solid #445fa5;
     border-radius: 18px;
     font-size: 14px;
     border-spacing: 2px;
     padding: 8px 16px;
-    background-color: transparent;
     color: #a1b0d8;
     border-color: #445fa5;
-
-}
-
-#searchLine {
-    text-align: center;
+    margin-bottom: 36px;
 }
 
 #search:focus {
@@ -84,10 +95,9 @@ input:focus
 }
 
 button {
-    background-color:transparent;
     border-radius:20px;
     border:2px solid #dcdcdc;
-    display:inline-block;
+    display:inline;
     cursor:pointer;
     color:#a1b0d8;
     font-family:Arial;
@@ -100,11 +110,15 @@ button {
 }
 
 button:hover {
-    background-color:transparent;
     border-color: #a1b0d8;
 }
 
 button:active {
     position: relative;
     top: 1px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
 }
