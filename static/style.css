@@ -3,15 +3,17 @@
     margin: 1rem;
     background-color: #96a0b5;
     text-align: center;
-
+    font-family: arial;
 }
 
 .table__row:nth-child(even) {
     background-color:#6d7a93;
+
 }
 
 .table__header {
     text-align: left;
+    color: #2c2f3e;
 }
 
 .table__cell {
@@ -72,6 +74,7 @@ img {
     color: #a1b0d8;
     border-color: #445fa5;
     margin-bottom: 36px;
+    background-color: transparent;
 }
 
 #search:focus {
@@ -107,6 +110,7 @@ button {
     text-decoration:none;
     border-spacing: 2px;
     border-color: #445fa5;
+    background-color: transparent;
 }
 
 button:hover {
