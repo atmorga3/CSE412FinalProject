@@ -77,7 +77,7 @@ img {
     background-color: transparent;
 }
 
-#search:focus {
+#search:focus, #category:focus {
     outline: none !important;
     border-color: #a1b0d8;
     color: #a1b0d8;
@@ -97,7 +97,7 @@ input:focus
     border-color: #a1b0d8;
 }
 
-button {
+#search_button, #category {
     border-radius:20px;
     border:2px solid #dcdcdc;
     display:inline;
@@ -113,11 +113,11 @@ button {
     background-color: transparent;
 }
 
-button:hover {
+#search_button:hover, #category:hover {
     border-color: #a1b0d8;
 }
 
-button:active {
+#search_button:active {
     position: relative;
     top: 1px;
 }

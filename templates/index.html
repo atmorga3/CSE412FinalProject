@@ -9,11 +9,16 @@
         <div id="upperBackImage">
             <img src="https://icon-library.com/images/league-of-legends-logo-icon/league-of-legends-logo-icon-28.jpg" alt="Logo">
             <h1>League of Legends Data</h1>
-            <div id="searchLine">
+            <form id="searchLine">
                 <!-- <h3 id="searchTitle">Search:</h3> -->
                 <input type="text" id="search" placeholder="Search">
-                <button type="button" id="search_button">Go</button>
-            </div>
+                <select name="category" id="category">
+                    <option value="champion">Champion</option>
+                    <option value="player">Player</option>
+                    <option value="team">Team</option>
+                </select>
+                <button type="submit" id="search_button">Go</button>
+            </form>
         </div>
         <div>
             <center>
