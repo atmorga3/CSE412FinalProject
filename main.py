@@ -15,6 +15,7 @@ match = db.Table('match', db.metadata, autoload=True, autoload_with=db.engine)
 player = db.Table('player', db.metadata, autoload=True, autoload_with=db.engine)
 plays = db.Table('plays', db.metadata, autoload=True, autoload_with=db.engine)
 
+
 # Execute a query and return results
 def executeQuery(query):
     return db.session.execute(query)
@@ -33,7 +34,12 @@ def getPlayerHeader():
     return executeQuery('SELECT * FROM player').keys()
 
 def getPlaysHeader():
-    return executeQuery('SELECT * FROM plays').keys()
+    return executeQuery('SELECT plays.match_id, player.player_name, champion.champion_name, '
+                        'plays.total_cs, plays.kills, plays.deaths, plays.assists, plays.role, '
+                        'plays.team, plays.result '
+                        'FROM plays, player, champion '
+                        'WHERE plays.player_id = player.player_id '
+                        'AND plays.champion_id = champion.champion_id').keys()
 
 # Get data
 def getBanData():
@@ -49,7 +55,8 @@ def getPlayerData():
     return db.session.query(player).all()
 
 def getPlaysData():
-    return db.session.query(plays).all()
+    return db.session.query(plays, player, champion).join(player).join(champion).all()
+
 
 # Search
 def getChampion(search):
@@ -73,6 +80,18 @@ def getMatch(search):
             print(i)
             match.append(i)
     return match
+
+def getPlays(search):
+    plays = []
+    list = []
+
+    for i in getPlaysData():
+        if i.match_id == search:
+            print(i)
+            list = [i.match_id, i.player_name, i.champion_name, i.total_cs, i.kills, i.deaths,
+                    i.assists, i.role, i.team, i.result]
+            plays.append(list)
+    return plays
 
 
 # Headers and data to fill table
@@ -118,7 +137,8 @@ def result():
         if search == '':
             data = getMatchData()
         else:
-            result = getMatch(search)
+            headings = getPlaysHeader()
+            result = getPlays(search)
             if len(result) == 0:
                 headings = []
                 data = []
