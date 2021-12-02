@@ -8,7 +8,7 @@
     <body>
         <div id="upperBackImage">
             <img src="https://icon-library.com/images/league-of-legends-logo-icon/league-of-legends-logo-icon-28.jpg" alt="Logo">
-            <h1>League of Legends Data</h1>
+            <a href="{{ url_for('index') }}"><h1>League of Legends Data</h1></a>
             <form id="searchLine" method="POST" action="{{ url_for('result') }}">
                 <!-- <h3 id="searchTitle">Search:</h3> -->
                 <input type="text" name="search" id="search" placeholder="Search">

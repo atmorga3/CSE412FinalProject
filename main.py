@@ -22,7 +22,7 @@ def executeQuery(query):
 
 # Get headers
 def getBanHeader():
-    return executeQuery('SELECT * FROM ban').keys()
+    return executeQuery('SELECT * FROM ban, champion WHERE ban.champion_id = champion.champion_id').keys()
 
 def getChampionHeader():
     return executeQuery('SELECT * FROM champion').keys()
@@ -36,14 +36,15 @@ def getPlayerHeader():
 def getPlaysHeader():
     return executeQuery('SELECT plays.match_id, player.player_name, champion.champion_name, '
                         'plays.total_cs, plays.kills, plays.deaths, plays.assists, plays.role, '
-                        'plays.team, plays.result '
-                        'FROM plays, player, champion '
+                        'plays.team, plays.result, match.game_length, match.date '
+                        'FROM plays, player, champion, match '
                         'WHERE plays.player_id = player.player_id '
-                        'AND plays.champion_id = champion.champion_id').keys()
+                        'AND plays.champion_id = champion.champion_id '
+                        'AND plays.match_id = match.match_id').keys()
 
 # Get data
 def getBanData():
-    return db.session.query(ban).all()
+    return db.session.query(ban, champion).join(champion).all()
 
 def getChampionData():
     return db.session.query(champion).all()
@@ -55,29 +56,61 @@ def getPlayerData():
     return db.session.query(player).all()
 
 def getPlaysData():
-    return db.session.query(plays, player, champion).join(player).join(champion).all()
+    return db.session.query(plays, player, champion, match).join(player).join(champion).join(match).all()
 
 
 # Search
 def getChampion(search):
     champ = []
-    for i in getChampionData():
+    totalCS = 0
+    kills = 0
+    deaths = 0
+    assists = 0
+    totalWins = 0
+    totalBans = 0
+    totalGames = 0
+    avgCS = 0
+    kda = 0
+    winRate = 0
+    data = getPlaysData()
+    champ_id = 0
+    champ_name = ""
+    for i in data:
         if str(i.champion_id) == search or i.champion_name.lower() == search.lower():
-            champ.append(i)
+            champ_id = i.champion_id
+            champ_name = i.champion_name
+            totalCS += i[3]
+            kills += i[4]
+            deaths += i[5]
+            assists += i[6]
+            totalGames += 1
+            if i[9] == 1:
+                totalWins += 1
+    for i in getBanData():
+        if str(i.champion_id) == search or i.champion_name.lower() == search.lower():
+            totalBans += 1
+    if totalGames > 0:
+        avgCS = round(totalCS / totalGames, 2)
+        kda = round((kills + assists) / deaths, 2)
+        winRate = round(totalWins / totalGames, 2)
+        banRate = round(totalBans / len(getMatchData()), 2)
+        list = [champ_id, champ_name, avgCS, kda, winRate, banRate]
+        champ.append(list)
     return champ
 
 def getPlayer(search):
     player = []
-    for i in getPlayerData():
+    for i in getPlaysData():
         if str(i.player_id) == search or i.player_name.lower() == search.lower():
-            player.append(i)
+            list = [i.match_id, i.player_name, i.champion_name, i.total_cs, i.kills, i.deaths,
+                    i.assists, i.role, i.team, i.result, i.game_length // 60, i.date]
+            player.append(list)
     return player
 
 def getMatch(search):
     match = []
     for i in getMatchData():
         if i.match_id == search:
-            print(i)
             match.append(i)
     return match
 
@@ -89,7 +122,7 @@ def getPlays(search):
         if i.match_id == search:
             print(i)
             list = [i.match_id, i.player_name, i.champion_name, i.total_cs, i.kills, i.deaths,
-                    i.assists, i.role, i.team, i.result]
+                    i.assists, i.role, i.team, i.result, i.game_length // 60, i.date]
             plays.append(list)
     return plays
 
@@ -111,6 +144,7 @@ def result():
         if search == '':
             data = getChampionData()
         else:
+            headings = ['champion_id', 'champion_name', 'average_cs', 'kda', 'average_win_rate', 'average_ban_rate']
             result = getChampion(search)
             if len(result) == 0:
                 headings = []
@@ -124,6 +158,7 @@ def result():
         if search == '':
             data = getPlayerData()
         else:
+            headings = getPlaysHeader()
             result = getPlayer(search)
             if len(result) == 0:
                 headings = []
@@ -131,6 +166,24 @@ def result():
                 flash("No Result")
             else:
                 data = result
+                totalCS = 0
+                kills = 0
+                deaths = 0
+                assists = 0
+                totalWins = 0
+                for i in data:
+                    totalCS += i[3]
+                    kills += i[4]
+                    deaths += i[5]
+                    assists += i[6]
+                    if i[9] == 1:
+                        totalWins += 1
+                avgCS = round(totalCS / len(data), 2)
+                kda = round((kills + assists) / deaths, 2)
+                winRate = round(totalWins / len(data), 2)
+                flash("Average Win Rate: " + str(winRate))
+                flash("Average CS: " + str(avgCS))
+                flash("Average KDA: " + str(kda))
 
     elif select == 'match':
         headings = getMatchHeader()
@@ -145,6 +198,7 @@ def result():
                 flash("No Result")
             else:
                 data = result
+
     return render_template('index.html', headings=headings, data=data)
 
 if __name__ == '__main__':
