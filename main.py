@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash
+from flask.templating import render_template_string
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 
 # Access database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pass@localhost/postgres'
@@ -50,15 +52,47 @@ def getPlayerData():
 def getPlaysData():
     return db.session.query(plays).all()
 
+# Search for champion
+def getChampion(champName):
+    for i in getChampionData():
+        if i.champion_name == champName:
+            return [i]
+    return "No results"
+
 # Headers and data to fill table
 headings = list()
 data = list()
 
 @app.route('/')
 def index():
-    headings = getChampionHeader()
-    data = getChampionData()
+    headings = getMatchHeader()
+    data = getMatchData()
+    return render_template('home.html')
+
+@app.route('/result', methods=['GET', 'POST'])
+def result():
+    select = request.form.get('category')
+    search = request.form.get('search')
+    if select == 'champion':
+        headings = getChampionHeader()
+        if search == '':
+            data = getChampionData()
+        else:
+            result = getChampion(search)
+            if result == 'No results':
+                headings = []
+                data = []
+                flash(result)
+            else:
+                data = result
+    elif select == 'player':
+        headings = getPlayerHeader()
+        data = getPlayerData()
+    elif select == 'match':
+        headings = getMatchHeader()
+        data = getMatchData()
     return render_template('index.html', headings=headings, data=data)
 
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

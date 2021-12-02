@@ -9,18 +9,17 @@
         <div id="upperBackImage">
             <img src="https://icon-library.com/images/league-of-legends-logo-icon/league-of-legends-logo-icon-28.jpg" alt="Logo">
             <h1>League of Legends Data</h1>
-            <form id="searchLine">
+            <form id="searchLine" method="POST" action="{{ url_for('result') }}">
                 <!-- <h3 id="searchTitle">Search:</h3> -->
-                <input type="text" id="search" placeholder="Search">
+                <input type="text" name="search" id="search" placeholder="Search">
                 <select name="category" id="category">
                     <option value="champion">Champion</option>
                     <option value="player">Player</option>
-                    <option value="team">Team</option>
+                    <option value="match">Match</option>
                 </select>
-                <button type="submit" id="search_button">Go</button>
+                <input type="submit" id="search_button" value="Go">
             </form>
         </div>
-        <div>
             <center>
             <table class="table" class="center">
                 <tr class="table__header">
@@ -36,6 +35,15 @@
                 </tr>
                 {% endfor %}
             </table>
+            <div class="alert">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <h1>{{ message }}</h1>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
             </center>
         </div>
     </body>
