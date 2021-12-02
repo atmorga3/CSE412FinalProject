@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, flash
-from flask.templating import render_template_string
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -52,12 +51,29 @@ def getPlayerData():
 def getPlaysData():
     return db.session.query(plays).all()
 
-# Search for champion
-def getChampion(champName):
+# Search
+def getChampion(search):
+    champ = []
     for i in getChampionData():
-        if i.champion_name == champName:
-            return [i]
-    return "No results"
+        if str(i.champion_id) == search or i.champion_name.lower() == search.lower():
+            champ.append(i)
+    return champ
+
+def getPlayer(search):
+    player = []
+    for i in getPlayerData():
+        if str(i.player_id) == search or i.player_name.lower() == search.lower():
+            player.append(i)
+    return player
+
+def getMatch(search):
+    match = []
+    for i in getMatchData():
+        if i.match_id == search:
+            print(i)
+            match.append(i)
+    return match
+
 
 # Headers and data to fill table
 headings = list()
@@ -65,8 +81,6 @@ data = list()
 
 @app.route('/')
 def index():
-    headings = getMatchHeader()
-    data = getMatchData()
     return render_template('home.html')
 
 @app.route('/result', methods=['GET', 'POST'])
@@ -79,20 +93,39 @@ def result():
             data = getChampionData()
         else:
             result = getChampion(search)
-            if result == 'No results':
+            if len(result) == 0:
                 headings = []
                 data = []
-                flash(result)
+                flash("No Result")
             else:
                 data = result
+
     elif select == 'player':
         headings = getPlayerHeader()
-        data = getPlayerData()
+        if search == '':
+            data = getPlayerData()
+        else:
+            result = getPlayer(search)
+            if len(result) == 0:
+                headings = []
+                data = []
+                flash("No Result")
+            else:
+                data = result
+
     elif select == 'match':
         headings = getMatchHeader()
-        data = getMatchData()
+        if search == '':
+            data = getMatchData()
+        else:
+            result = getMatch(search)
+            if len(result) == 0:
+                headings = []
+                data = []
+                flash("No Result")
+            else:
+                data = result
     return render_template('index.html', headings=headings, data=data)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

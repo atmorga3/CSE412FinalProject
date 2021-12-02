@@ -11,7 +11,7 @@
             <h1>League of Legends Data</h1>
             <form id="searchLine" method="POST" action="{{ url_for('result') }}">
                 <!-- <h3 id="searchTitle">Search:</h3> -->
-                <input type="text" id="search" placeholder="Search">
+                <input type="text" name="search" id="search" placeholder="Search">
                 <select name="category" id="category">
                     <option value="champion">Champion</option>
                     <option value="player">Player</option>
