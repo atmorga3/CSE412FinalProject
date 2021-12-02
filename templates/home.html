@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="/static/style.css" />
+        <title>CSE 412 Final Project</title>
+    </head>
+    <body>
+        <div id="upperBackImage">
+            <img src="https://icon-library.com/images/league-of-legends-logo-icon/league-of-legends-logo-icon-28.jpg" alt="Logo">
+            <h1>League of Legends Data</h1>
+            <form id="searchLine" method="POST" action="{{ url_for('result') }}">
+                <!-- <h3 id="searchTitle">Search:</h3> -->
+                <input type="text" id="search" placeholder="Search">
+                <select name="category" id="category">
+                    <option value="champion">Champion</option>
+                    <option value="player">Player</option>
+                    <option value="match">Match</option>
+                </select>
+                <input type="submit" id="search_button" value="Go">
+            </form>
+        </div>
+    </body>
+</html>
