@@ -5,7 +5,8 @@ app = Flask(__name__)
 app.secret_key = "super secret key"
 
 # Access database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pass@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pass@localhost/project412' \
+                                        ''
 db = SQLAlchemy(app)
 
 # Get all tables
