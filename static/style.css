@@ -35,6 +35,16 @@ h1 {
     padding: 1em;
 }
 
+h2 {
+    font-family: arial;
+    color: #a1b0d8;
+    text-align: center;
+    display: inline inherit;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 0px;
+}
+
 #searchTitle {
     font-family: arial;
     color: #a1b0d8;
@@ -66,6 +76,7 @@ img {
 
 #search {
     display: inline;
+    width: 400px;
     border: 2px solid #445fa5;
     border-radius: 18px;
     font-size: 14px;
@@ -126,4 +137,8 @@ body {
     margin: 0px;
     padding: 0px;
     background-color: #2c2f3e;
+}
+
+a {
+    text-decoration: none; 
 }
