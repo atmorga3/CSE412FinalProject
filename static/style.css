@@ -4,6 +4,7 @@
     background-color: #96a0b5;
     text-align: center;
     font-family: arial;
+    margin-bottom: 4rem;
 }
 
 .table__row:nth-child(even) {
@@ -21,6 +22,7 @@
 }
 
 .center {
+    text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
@@ -61,12 +63,17 @@ img {
     margin-top: 1em;
 }
 
+#break {
+
+}
+
 #upperBackImage {
     background-image: url("https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt13186c22cf0a2f30/5d87c24e3166f22df2ab8dc4/howlingabyss.jpg");
+    height: 15em;
+    background-origin: inherit;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: cover;
     display: inherit;
     white-space: nowrap;
     text-align: center;
@@ -141,4 +148,20 @@ body {
 
 a {
     text-decoration: none; 
+}
+
+#homeDescription {
+    color: #6d7a93;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #6d7a93;
+    color: #2c2f3e;
+    text-align: center;
 }

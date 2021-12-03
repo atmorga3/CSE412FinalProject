@@ -20,5 +20,32 @@
                 <input type="submit" id="search_button" value="Go">
             </form>
         </div>
+        <div class="center" id="homeDescription">
+            <h2>Application Description</h2>
+            <h4 id="center">This application will visualize Competitive League of Legends win-rate, KDA, ban-rate, total CS, and role by champion or player. Data regarding the match, player, and champion will be able to be searched.
+            <br><br>
+            Match data will store unique instances of matches in the system by an identifying match_id. Player data will store player names and identifying player ID’s. Similarly, Champion data will store champion names and champion ID’s.
+            <br><br>
+            A ternary relationship among Match, Player, and Champion will store relevant match data specific to the player and champion played such as win, team, total CS, kills, deaths, assists, and role. Because this is a ternary relationship, all three entity sets must be present to form a row for the Plays table, meaning a match cannot be played without both players and champions.
+            <br><br>
+            A Ban relationship connects a Match and 10 Champions with key and participation constraints that specify a match can ban several champions.</h4>
+        </div>
+        <div class="center" id="homeDescription">
+            <br><br>
+            <h2>Important Definitions</h2>
+            <h4>Ban: Before the match, each team takes turns banning champions preventing them from being played in the match. There are 10 ban's per match and a champion can only be banned once per match so a total of 10 bans happen every match.
+                <br><br>
+                average_cs: average creep score -- average amount of minions (creeps) killed
+                <br><br>
+                kda: kills deaths assists -- calculated by (kills + assists)/deaths
+                <br><br>
+                average_win_rate: % of wins vs losses
+                <br><br>
+                average_ban_rate: % of games it was banned</h4>
+        </div>
+        <div class="footer">
+            <p>Created by Created by - Group 17: Aidan Morgan | Liam Donnelly | Novilia Lioe | Junghwan Park</p>
+        </div>
+
     </body>
 </html>
